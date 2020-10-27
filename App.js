@@ -1,21 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import Home from './src/screens/Home';
+import Quiz from './src/screens/Quiz';
+import Results from './src/screens/Results';
+import QuestionsProvider from './src/contexts/QuestionsContext';
+import QuizInfoProvider from './src/contexts/QuizInfoContext';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <QuizInfoProvider>
+      <QuestionsProvider>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Quiz" component={Quiz} />
+            <Stack.Screen name="Results" component={Results} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </QuestionsProvider>
+    </QuizInfoProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
